@@ -7,7 +7,8 @@ import Layout from '../layouts/Layout.astro';
     <div class="header-beta">
       <h1 class="level-title">Nivel Beta</h1>
       <div class="timer-box">
-        Tiempo: <span id="time-left">15</span>s
+
+        <span id="time-left">15</span>s
       </div>
     </div>
 
@@ -30,6 +31,12 @@ import Layout from '../layouts/Layout.astro';
     justify-content: center;
     text-align: center;
     margin-top: 2rem;
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .header-beta {
@@ -38,70 +45,122 @@ import Layout from '../layouts/Layout.astro';
     align-items: center;
     width: 100%;
     max-width: 600px;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
   }
 
   .level-title {
-    color: #5d2a5d;
-    font-size: 2rem;
+    font-size: 2.2rem;
     margin: 0;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    background: linear-gradient(135deg, #22D3EE, #3B82F6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(2px 2px 4px rgba(59, 130, 246, 0.3));
   }
 
   .timer-box {
-    background-color: #ffb3c1;
-    color: #5d2a5d;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    font-family: monospace;
+    background: linear-gradient(135deg, #EF4444, #F97316);
+    color: #fff;
+    padding: 0.6rem 1.2rem;
+    border-radius: 16px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    font-family: 'Fredoka', monospace;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: transform 0.2s ease;
+  }
+
+
+  :global(.timer-warning) {
+    animation: timerPulse 0.5s ease-in-out infinite;
+    background: linear-gradient(135deg, #DC2626, #EF4444) !important;
+  }
+
+  @keyframes timerPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
   }
 
   .screen {
-    background-color: #ffffff;
-    color: #791aab;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    color: #1e3a5f;
     padding: 2rem 4rem;
-    border-radius: 15px;
-    border: 4px dashed #cdb4db;
-    box-shadow: 0 8px 20px rgba(205, 180, 219, 0.3);
+    border-radius: 24px;
+    box-shadow: 
+      0 8px 32px rgba(59, 130, 246, 0.2),
+      inset 0 0 0 4px rgba(59, 130, 246, 0.2);
     margin-bottom: 2rem;
     min-width: 300px;
+    position: relative;
+  }
+
+  .screen::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 28px;
+    background: linear-gradient(135deg, #22D3EE, #3B82F6, #8B5CF6, #EC4899);
+    z-index: -1;
+    animation: borderGlow 3s ease-in-out infinite;
+  }
+
+  @keyframes borderGlow {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
   }
 
   #math-question {
     font-size: 4rem;
     margin: 0;
-    font-family: monospace;
+    font-family: 'Fredoka', monospace;
     letter-spacing: 5px;
+    color: #1e1b4b;
   }
 
   .fruits-container {
     display: flex;
-    gap: 2rem;
+    gap: 1.5rem;
     justify-content: center;
     flex-wrap: wrap;
   }
 
   :global(.fruit-btn) {
-    background-color: #fff;
-    border: 3px solid #bde0fe;
-    color: #002855;
-    font-size: 2.5rem;
-    font-weight: bold;
-    padding: 1rem 2rem;
-    border-radius: 10px;
+    background: linear-gradient(135deg, #22D3EE, #3B82F6);
+    border: none;
+    color: #fff;
+    font-size: 2.2rem;
+    font-weight: 700;
+    padding: 1.2rem 2rem;
+    border-radius: 20px;
     cursor: pointer;
-    transition: all 0.2s ease;
-    min-width: 120px;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    min-width: 130px;
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  :global(.fruit-btn::before) {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, transparent 50%);
+    pointer-events: none;
   }
 
   :global(.fruit-btn:hover) {
-    background-color: #bde0fe;
-    color: #002855;
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(189, 224, 254, 0.5);
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 12px 30px rgba(59, 130, 246, 0.5);
+  }
+
+  :global(.fruit-btn:active) {
+    transform: translateY(-2px) scale(0.98);
   }
 
   .feedback {
@@ -111,8 +170,26 @@ import Layout from '../layouts/Layout.astro';
     min-height: 2rem;
   }
 
-  :global(.correct) { color: #52b788; }
-  :global(.incorrect) { color: #ff6b81; }
+  :global(.correct) {
+    color: #16a34a;
+    animation: correctPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  :global(.incorrect) {
+    color: #ef4444;
+    animation: shake 0.5s ease;
+  }
+
+  @keyframes correctPop {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+  }
 </style>
 
 <script>
@@ -120,6 +197,7 @@ import Layout from '../layouts/Layout.astro';
   const optionsContainer = document.getElementById('options-container');
   const feedbackEl = document.getElementById('feedback-message');
   const timeLeftEl = document.getElementById('time-left');
+  const timerBox = document.querySelector('.timer-box');
 
   let timer: ReturnType<typeof setInterval> | undefined;
   let timeLeft = 15;
@@ -128,11 +206,17 @@ import Layout from '../layouts/Layout.astro';
   function startTimer() {
     timeLeft = 15;
     if (timeLeftEl) timeLeftEl.textContent = timeLeft.toString();
+    if (timerBox) timerBox.classList.remove('timer-warning');
     clearInterval(timer);
 
     timer = setInterval(() => {
       timeLeft--;
       if (timeLeftEl) timeLeftEl.textContent = timeLeft.toString();
+
+      // Add warning pulse when time is running out
+      if (timeLeft <= 5 && timerBox) {
+        timerBox.classList.add('timer-warning');
+      }
 
       if (timeLeft <= 0) {
         clearInterval(timer);
@@ -144,7 +228,7 @@ import Layout from '../layouts/Layout.astro';
   function handleTimeOut() {
     isAnswering = true;
     if (feedbackEl) {
-      feedbackEl.textContent = "Tiempo agotado";
+      feedbackEl.textContent = "¡Tiempo agotado!";
       feedbackEl.className = "feedback incorrect";
     }
     setTimeout(() => {
@@ -206,7 +290,7 @@ import Layout from '../layouts/Layout.astro';
     options.forEach((opt, index) => {
       const btn = document.createElement('button');
       btn.className = 'fruit-btn';
-      btn.textContent = `Fruta ${labels[index]}: ${opt.value}`;
+      btn.textContent = `Opción ${labels[index]}: ${opt.value}`;
 
       btn.addEventListener('click', () => {
         if (!isAnswering) checkAnswer(opt.isCorrect);
@@ -223,7 +307,7 @@ import Layout from '../layouts/Layout.astro';
     if (!feedbackEl) return;
 
     if (isCorrect) {
-      feedbackEl.textContent = "Correcto";
+      feedbackEl.textContent = "¡Correcto!";
       feedbackEl.className = "feedback correct";
 
       setTimeout(() => {
