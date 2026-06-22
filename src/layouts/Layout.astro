@@ -1,6 +1,12 @@
 ---
 import Navbar from '../components/navbar.astro';
 import Footer from '../components/footer.astro';
+
+interface Props {
+  isHome?: boolean;
+}
+
+const { isHome = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -13,7 +19,7 @@ import Footer from '../components/footer.astro';
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
   </head>
-  <body>
+  <body class={isHome ? 'home' : ''}>
 
     <Navbar />
 
@@ -36,16 +42,9 @@ import Footer from '../components/footer.astro';
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(135deg, #FFE066 0%, #FF6B9D 25%, #C084FC 50%, #60D5FA 75%, #34D399 100%);
-    background-size: 400% 400%;
-    animation: gradientShift 12s ease infinite;
+    background: url('/4.jpeg') center/cover no-repeat fixed;
+    background-attachment: fixed;
     overflow-x: hidden;
-  }
-
-  @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
   }
 
   .container {
