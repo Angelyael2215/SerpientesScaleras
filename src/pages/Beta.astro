@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
 ---
 
 <Layout>
@@ -193,6 +194,9 @@ import Layout from '../layouts/Layout.astro';
 </style>
 
 <script>
+  //@ts-ignore
+  import confetti from 'canvas-confetti';
+
   const questionEl = document.getElementById('math-question');
   const optionsContainer = document.getElementById('options-container');
   const feedbackEl = document.getElementById('feedback-message');
@@ -310,6 +314,15 @@ import Layout from '../layouts/Layout.astro';
       feedbackEl.textContent = "¡Correcto!";
       feedbackEl.className = "feedback correct";
 
+      const audioGanar = new Audio('/sounds/Ganar.mp3');
+      audioGanar.play();
+
+      confetti({
+        particleCount:150,
+        spread:80,
+        origin:{y:0.6}
+      });
+
       setTimeout(() => {
         generateQuestion();
       }, 1500);
@@ -317,6 +330,32 @@ import Layout from '../layouts/Layout.astro';
     } else {
       feedbackEl.textContent = "Intenta de nuevo";
       feedbackEl.className = "feedback incorrect";
+
+      const audioPerder = new Audio('/sounds/perder.mp3');
+      audioPerder.play();
+
+      for (let i = 0; i < 10; i++) {
+    const x = document.createElement('div');
+    x.textContent = '❌'; // Puedes cambiarlo por 😢 si prefieres
+    x.style.position = 'fixed';
+    x.style.top = '-50px';
+    // Los distribuye a lo ancho de la pantalla de forma aleatoria
+    x.style.left = Math.random() * 100 + 'vw'; 
+    x.style.fontSize = Math.random() * (30 - 20) + 20 + 'px';
+    x.style.zIndex = '9999';
+    x.style.pointerEvents = 'none';
+    x.style.transition = 'transform 1s linear, opacity 1s ease';
+    
+    document.body.appendChild(x);
+
+    // Animación de caída libre con un ligero delay aleatorio
+    setTimeout(() => {
+      x.style.transform = `translateY(110vh) rotate(${Math.random() * 360}deg)`;
+      x.style.opacity = '0';
+      setTimeout(() => x.remove(), 1000);
+    }, Math.random() * 200);
+  }
+  
       setTimeout(() => {
         generateQuestion();
       }, 1500);
