@@ -4,9 +4,10 @@ import Footer from '../components/footer.astro';
 
 interface Props {
   isHome?: boolean;
+  showLevelButtons?: boolean;
 }
 
-const { isHome = false } = Astro.props;
+const { isHome = false, showLevelButtons = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -21,7 +22,7 @@ const { isHome = false } = Astro.props;
   </head>
   <body class={isHome ? 'home' : ''}>
 
-    <Navbar />
+    <Navbar showLevelButtons={showLevelButtons} />
 
     <main class="container">
       <slot />
