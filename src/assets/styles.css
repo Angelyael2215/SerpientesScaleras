@@ -11,15 +11,8 @@ html, body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg, #FFE066 0%, #FF6B9D 25%, #C084FC 50%, #60D5FA 75%, #34D399 100%);
-  background-size: 400% 400%;
-  animation: gradientShift 12s ease infinite;
-}
-
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  background: url('/4.jpeg') center/cover no-repeat fixed;
+  background-attachment: fixed;
 }
 
 .container {
@@ -73,9 +66,9 @@ html, body {
 }
 
 .fruit-btn {
-  background: linear-gradient(135deg, #FF922B, #FFD43B);
+  background: linear-gradient(135deg, #FF6B35, #FF8C42);
   border: none;
-  color: #7c2d12;
+  color: #fff;
   font-size: 2.2rem;
   font-weight: 700;
   padding: 1.2rem 2.5rem;
@@ -83,7 +76,7 @@ html, body {
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   min-width: 150px;
-  box-shadow: 0 6px 20px rgba(255, 146, 43, 0.3);
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
 }
 
 .fruit-btn:hover {

@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 
 ---
 
-<Layout>
+<Layout showLevelButtons={true}>
   <div class="game-container">
     <div class="header-beta">
       <h1 class="level-title">Nivel Beta</h1>
@@ -54,11 +54,10 @@ import Layout from '../layouts/Layout.astro';
     margin: 0;
     text-transform: uppercase;
     letter-spacing: 3px;
-    background: linear-gradient(135deg, #22D3EE, #3B82F6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: drop-shadow(2px 2px 4px rgba(59, 130, 246, 0.3));
+    color: #f8fafc;
+    font-weight: 800;
+    text-shadow: 2px 2px 10px rgba(15, 23, 42, 0.18);
+    filter: drop-shadow(1px 1px 4px rgba(15, 23, 42, 0.12));
   }
 
   .timer-box {
@@ -88,14 +87,15 @@ import Layout from '../layouts/Layout.astro';
   }
 
   .screen {
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(22px);
     color: #1e3a5f;
     padding: 2rem 4rem;
     border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.45);
     box-shadow: 
-      0 8px 32px rgba(59, 130, 246, 0.2),
-      inset 0 0 0 4px rgba(59, 130, 246, 0.2);
+      0 16px 40px rgba(15, 23, 42, 0.12),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.55);
     margin-bottom: 2rem;
     min-width: 300px;
     position: relative;
@@ -104,16 +104,10 @@ import Layout from '../layouts/Layout.astro';
   .screen::before {
     content: '';
     position: absolute;
-    inset: -4px;
-    border-radius: 28px;
-    background: linear-gradient(135deg, #22D3EE, #3B82F6, #8B5CF6, #EC4899);
+    inset: -2px;
+    border-radius: 26px;
+    background: rgba(255, 255, 255, 0.18);
     z-index: -1;
-    animation: borderGlow 3s ease-in-out infinite;
-  }
-
-  @keyframes borderGlow {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 1; }
   }
 
   #math-question {
@@ -132,32 +126,55 @@ import Layout from '../layouts/Layout.astro';
   }
 
   :global(.fruit-btn) {
-    background: linear-gradient(135deg, #22D3EE, #3B82F6);
-    border: none;
-    color: #fff;
-    font-size: 2.2rem;
-    font-weight: 700;
-    padding: 1.2rem 2rem;
-    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: 800;
+    padding: 1.4rem 2rem;
+    border-radius: 28px;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    min-width: 130px;
-    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    min-width: 170px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.16);
     position: relative;
     overflow: hidden;
+    backdrop-filter: blur(16px);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   }
 
   :global(.fruit-btn::before) {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, transparent 50%);
+    background: linear-gradient(135deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.08) 40%, transparent 100%);
     pointer-events: none;
   }
 
   :global(.fruit-btn:hover) {
-    transform: translateY(-8px) scale(1.05);
-    box-shadow: 0 12px 30px rgba(59, 130, 246, 0.5);
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 24px 50px rgba(0, 0, 0, 0.2);
+  }
+
+  :global(.fruit-btn.blue-card) {
+    background: rgba(59, 130, 246, 0.24);
+    border-color: rgba(59, 130, 246, 0.55);
+  }
+
+  :global(.fruit-btn.green-card) {
+    background: rgba(16, 185, 129, 0.24);
+    border-color: rgba(16, 185, 129, 0.55);
+  }
+
+  :global(.fruit-btn.red-card) {
+    background: rgba(239, 68, 68, 0.24);
+    border-color: rgba(239, 68, 68, 0.55);
+  }
+
+  :global(.fruit-btn.yellow-card) {
+    background: rgba(234, 179, 8, 0.24);
+    border-color: rgba(234, 179, 8, 0.55);
+    color: #1f2937;
   }
 
   :global(.fruit-btn:active) {
@@ -290,10 +307,11 @@ import Layout from '../layouts/Layout.astro';
     optionsContainer.innerHTML = '';
 
     const labels = ['A', 'B', 'C'];
+    const colorClasses = ['blue-card', 'green-card', 'red-card', 'yellow-card'];
 
     options.forEach((opt, index) => {
       const btn = document.createElement('button');
-      btn.className = 'fruit-btn';
+      btn.className = `fruit-btn ${colorClasses[index % colorClasses.length]}`;
       btn.textContent = `Opción ${labels[index]}: ${opt.value}`;
 
       btn.addEventListener('click', () => {
